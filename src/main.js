@@ -1,4 +1,4 @@
-`use strict`;
+'use strict';
 
 const renderComponent = (container, template, position) => {
   container.insertAdjacentHTML(position, template);
@@ -35,7 +35,7 @@ const createMenuTemplate = () => {
         >
       </section>`
   );
-}
+};
 
 const createFilterTemplate = () => {
   return (
@@ -124,8 +124,6 @@ const createBoardListTemplate = () => {
     </div>`
   );
 };
-
-
 
 const createTaskTemplate = () => {
   return (
