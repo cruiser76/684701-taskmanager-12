@@ -6,6 +6,11 @@ import {createTaskTemplate} from './view/task.js';
 import {createEditTaskTemplate} from './view/task-edit.js';
 import {createLoadMoreTemplate} from './view/load-more.js';
 
+import getTask from './mock/task.js';
+
+const tasks = Array(3).fill().map(() => getTask());
+console.log(tasks);
+
 const renderComponent = (container, template, position) => {
   container.insertAdjacentHTML(position, template);
 };
