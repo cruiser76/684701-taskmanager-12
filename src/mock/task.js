@@ -13,6 +13,7 @@ const getDescription = () => {
 
 const getDueDate = () => {
   let dueDate = null;
+
   const isDate = Boolean(getRandomInt(0, 1));
 
   if (isDate) {
