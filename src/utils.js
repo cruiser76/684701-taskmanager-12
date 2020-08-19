@@ -38,3 +38,38 @@ export const isTaskRepeating = (repeatingDays) => {
 export const humanizeTaskDueDate = (dueDate) => {
   return dueDate.toLocaleString(`en-US`, {day: `numeric`, month: `long`});
 };
+
+export const createElement = (template) => {
+  const elementWrapper = document.createElement(`div`);
+  elementWrapper.innerHTML = template;
+
+  return elementWrapper.firstChild;
+};
+
+export const renderComponent = (container, template, position) => {
+  container.insertAdjacentHTML(position, template);
+};
+
+export const RenderPosition = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`,
+  AFTER: `after`,
+  BEFORE: `before`
+};
+
+export const render = (container, element, position) => {
+  switch (position) {
+    case RenderPosition.AFTERBEGIN:
+      container.prepend(element);
+      break;
+    case RenderPosition.BEFOREEND:
+      container.append(element);
+      break;
+    case RenderPosition.AFTER:
+      container.before(element);
+      break;
+    case RenderPosition.BEFORE:
+      container.after(element);
+      break;
+  }
+};
