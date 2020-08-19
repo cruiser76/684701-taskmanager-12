@@ -65,10 +65,10 @@ export const render = (container, element, position) => {
     case RenderPosition.BEFOREEND:
       container.append(element);
       break;
-    case RenderPosition.AFTER:
+    case RenderPosition.BEFORE:
       container.before(element);
       break;
-    case RenderPosition.BEFORE:
+    case RenderPosition.AFTER:
       container.after(element);
       break;
   }
