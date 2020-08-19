@@ -66,7 +66,7 @@ const getTask = () => {
     repeatingDays,
     color: getRandomColor(),
     isFavorite: Boolean(getRandomInt(0, 1)),
-    isArchive: true,
+    isArchive: Boolean(getRandomInt(0, 1)),
   };
 };
 
