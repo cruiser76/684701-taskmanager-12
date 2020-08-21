@@ -1,4 +1,4 @@
-import Abstract from '../../../taskmanager-12/src/view/abstract.js';
+import Abstract from './abstract.js';
 
 const createFilterItemTemplate = (filter, isChecked) => {
   const {name, count} = filter;

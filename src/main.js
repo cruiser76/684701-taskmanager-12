@@ -8,7 +8,8 @@ import TaskEdit from './view/task-edit.js';
 import LoadMore from './view/load-more.js';
 import NoTask from './view/no-task.js';
 import {generateFilter} from './mock/filter.js';
-import {render, RenderPosition} from './utils.js';
+import {render} from './utils/render.js';
+import {RenderPosition} from './utils/const.js';
 
 import getTask from './mock/task.js';
 
@@ -41,33 +42,31 @@ const renderTask = (taskListElement, task) => {
     }
   };
 
-  taskView.getElement().querySelector(`.card__btn--edit`).addEventListener(`click`, () => {
+  taskView.setEditClickHandler(() => {
     replaceCardToForm();
     document.addEventListener(`keydown`, onEscKeyDown);
   });
 
-  taskEditView.getElement().querySelector(`form`).addEventListener(`submit`, (evt) => {
-    evt.preventDefault();
+  taskEditView.setFormSubmitHandler(() => {
     replaceFormToCard();
     document.removeEventListener(`keydown`, onEscKeyDown);
   });
 
-
-  render(taskListElement, taskView.getElement(), RenderPosition.BEFOREEND);
+  render(taskListElement, taskView, RenderPosition.BEFOREEND);
 };
 
 const renderBoard = (boardContainer, boardTasks) => {
   const board = new Board();
   const taskList = new TaskList();
 
-  render(boardContainer, board.getElement(), RenderPosition.BEFOREEND);
-  render(board.getElement(), taskList.getElement(), RenderPosition.BEFOREEND);
+  render(boardContainer, board, RenderPosition.BEFOREEND);
+  render(board, taskList, RenderPosition.BEFOREEND);
 
   if (boardTasks.every((task) => task.isArchive)) {
-    render(board.getElement(), new NoTask().getElement(), RenderPosition.AFTERBEGIN);
+    render(board, new NoTask(), RenderPosition.AFTERBEGIN);
     return;
   }
-  render(board.getElement(), new SortTemplate().getElement(), RenderPosition.AFTERBEGIN);
+  render(board, new SortTemplate(), RenderPosition.AFTERBEGIN);
 
   for (let i = 0; i < Math.min(tasks.length, TASK_COUNT_PER_STEP); i++) {
     renderTask(taskList.getElement(), boardTasks[i]);
@@ -78,7 +77,7 @@ const renderBoard = (boardContainer, boardTasks) => {
 
     const loadMore = new LoadMore();
 
-    render(board.getElement(), loadMore.getElement(), RenderPosition.BEFOREEND);
+    render(board, loadMore, RenderPosition.BEFOREEND);
 
     loadMore.getElement().addEventListener(`click`, (evt) => {
       evt.preventDefault();
@@ -96,6 +95,6 @@ const renderBoard = (boardContainer, boardTasks) => {
   }
 };
 
-render(mainControl, new SiteMenu().getElement(), RenderPosition.BEFOREEND);
-render(main, new Filter(filters).getElement(), RenderPosition.BEFOREEND);
+render(mainControl, new SiteMenu(), RenderPosition.BEFOREEND);
+render(main, new Filter(filters), RenderPosition.BEFOREEND);
 renderBoard(main, tasks);

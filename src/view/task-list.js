@@ -1,4 +1,4 @@
-import Abstract from '../../../taskmanager-12/src/view/abstract';
+import Abstract from './abstract.js';
 
 const createTaskListTemplate = () => {
   return `<div class="board__tasks"></div>`;

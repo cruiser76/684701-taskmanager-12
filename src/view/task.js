@@ -1,5 +1,5 @@
-import {isTaskExpired, isTaskRepeating, humanizeTaskDueDate} from '../utils.js';
-import Abstract from '../../../taskmanager-12/src/view/abstract.js';
+import {isTaskExpired, isTaskRepeating, humanizeTaskDueDate} from '../utils/task.js';
+import Abstract from './abstract.js';
 
 const createTaskTemplate = (task) => {
   const {color, description, dueDate, repeatingDays, isArchive, isFavorite} = task;
@@ -74,10 +74,21 @@ class Task extends Abstract {
   constructor(task) {
     super();
     this._task = task;
+    this._handleEditClick = this._handleEditClick.bind(this);
+  }
+
+  _handleEditClick(evt) {
+    evt.preventDefault();
+    this._callback.editClick();
   }
 
   getTemplate() {
     return createTaskTemplate(this._task);
+  }
+
+  setEditClickHandler(cb) {
+    this._callback.editClick = cb;
+    this.getElement().querySelector(`.card__btn--edit`).addEventListener(`click`, this._handleEditClick);
   }
 }
 
