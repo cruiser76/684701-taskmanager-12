@@ -1,4 +1,4 @@
-import {createElement} from './../utils.js';
+import Abstract from '../../../taskmanager-12/src/view/abstract.js';
 
 const createNoTaskTemplate = () => {
   return `<p class="board__no-tasks">
@@ -6,25 +6,9 @@ const createNoTaskTemplate = () => {
   </p>`;
 };
 
-class NoTask {
-  constructor() {
-    this._element = null;
-  }
-
+class NoTask extends Abstract {
   getTemplate() {
     return createNoTaskTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
 

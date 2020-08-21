@@ -1,5 +1,6 @@
 import {COLORS} from './../const.js';
-import {isTaskExpired, isTaskRepeating, humanizeTaskDueDate, createElement} from "../utils.js";
+import {isTaskExpired, isTaskRepeating, humanizeTaskDueDate} from "../utils.js";
+import Abstract from '../../../taskmanager-12/src/view/abstract.js';
 
 const BLANK_TASK = {
   color: COLORS[0],
@@ -138,26 +139,14 @@ const createEditTaskTemplate = (task) => {
 };
 
 
-class TaskEdit {
+class TaskEdit extends Abstract {
   constructor(task = BLANK_TASK) {
-    this._element = null;
+    super();
     this._task = task;
   }
 
   getTemplate() {
     return createEditTaskTemplate(this._task);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
 

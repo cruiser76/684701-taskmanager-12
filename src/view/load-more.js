@@ -1,4 +1,4 @@
-import {createElement} from './../utils.js';
+import Abstract from './abstract.js';
 
 const createLoadMoreTemplate = () => {
   return (
@@ -6,25 +6,9 @@ const createLoadMoreTemplate = () => {
   );
 };
 
-class LoadMore {
-  constructor() {
-    this._element = null;
-  }
-
+class LoadMore extends Abstract {
   getTemplate() {
     return createLoadMoreTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
 

@@ -1,4 +1,5 @@
-import {isTaskExpired, isTaskRepeating, humanizeTaskDueDate, createElement} from '../utils.js';
+import {isTaskExpired, isTaskRepeating, humanizeTaskDueDate} from '../utils.js';
+import Abstract from '../../../taskmanager-12/src/view/abstract.js';
 
 const createTaskTemplate = (task) => {
   const {color, description, dueDate, repeatingDays, isArchive, isFavorite} = task;
@@ -69,26 +70,14 @@ const createTaskTemplate = (task) => {
   );
 };
 
-class Task {
+class Task extends Abstract {
   constructor(task) {
-    this._element = null;
+    super();
     this._task = task;
   }
 
   getTemplate() {
     return createTaskTemplate(this._task);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
 
