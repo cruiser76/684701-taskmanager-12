@@ -23,7 +23,6 @@ class Sort extends Abstract {
     }
 
     evt.preventDefault();
-    console.log(evt);
     this._callback.sortTypeChange(evt.target.dataset.sortType);
   }
 
