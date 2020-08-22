@@ -1,5 +1,5 @@
-import {getRandomInt} from './../utils.js';
-import {COLORS} from './../const.js';
+import {getRandomInt} from './../utils/common.js';
+import {COLORS} from './../utils/const.js';
 
 const getDescription = () => {
   const descriptions = [

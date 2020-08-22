@@ -1,4 +1,4 @@
-import {createElement} from './../utils.js';
+import Abstract from './abstract.js';
 
 const createLoadMoreTemplate = () => {
   return (
@@ -6,25 +6,23 @@ const createLoadMoreTemplate = () => {
   );
 };
 
-class LoadMore {
+class LoadMore extends Abstract {
   constructor() {
-    this._element = null;
+    super();
+    this._handleLoadMoreButtonClick = this._handleLoadMoreButtonClick.bind(this);
   }
-
   getTemplate() {
     return createLoadMoreTemplate();
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _handleLoadMoreButtonClick(evt) {
+    evt.preventDefault();
+    this._callback.loadMoreClick();
   }
 
-  removeElement() {
-    this._element = null;
+  setLoadMoreClick(cb) {
+    this._callback.loadMoreClick = cb;
+    this._element.addEventListener(`click`, this._handleLoadMoreButtonClick);
   }
 }
 

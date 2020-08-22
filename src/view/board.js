@@ -1,4 +1,4 @@
-import {createElement} from './../utils.js';
+import Abstract from './abstract.js';
 
 const createBoardContainerTemplate = () => {
   return (
@@ -7,25 +7,9 @@ const createBoardContainerTemplate = () => {
   );
 };
 
-class Board {
-  constructor() {
-    this._element = null;
-  }
-
+class Board extends Abstract {
   getTemplate() {
     return createBoardContainerTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
 
