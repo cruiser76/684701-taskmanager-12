@@ -148,7 +148,7 @@ class TaskEdit extends Abstract {
 
   _handleSubmitForm(evt) {
     evt.preventDefault();
-    this._callback.handleSubmit();
+    this._callback.handleSubmit(this._task);
   }
 
   getTemplate() {
