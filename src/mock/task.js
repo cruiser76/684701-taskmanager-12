@@ -1,6 +1,12 @@
 import {getRandomInt} from './../utils/common.js';
 import {COLORS} from './../utils/const.js';
 
+// Date.now() и Math.random() - плохие решения для генерации id
+// в "продуктовом" коде, а для моков самое то.
+// Для "продуктового" кода используйте что-то понадежнее,
+// вроде nanoid - https://github.com/ai/nanoid
+const generateId = () => Date.now() + parseInt(Math.random() * 10000, 10);
+
 const getDescription = () => {
   const descriptions = [
     `Изучить теорию`,
@@ -61,6 +67,7 @@ const getTask = () => {
     };
 
   return {
+    id: generateId(),
     description: getDescription(),
     dueDate,
     repeatingDays,
