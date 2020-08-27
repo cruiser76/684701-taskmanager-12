@@ -1,6 +1,6 @@
 import {COLORS} from '../utils/const.js';
 import {isTaskExpired, isTaskRepeating, humanizeTaskDueDate} from "../utils/task.js";
-import Abstract from './abstract.js';
+import SmartView from './smart.js';
 
 const BLANK_TASK = {
   color: COLORS[0],
@@ -141,7 +141,7 @@ const createEditTaskTemplate = (data) => {
 };
 
 
-class TaskEdit extends Abstract {
+class TaskEdit extends SmartView {
   constructor(task = BLANK_TASK) {
     super();
     this._task = task;
@@ -158,38 +158,14 @@ class TaskEdit extends Abstract {
     this._setInnerHandlers();
   }
 
+  reset(task) {
+    this.updateData(
+        TaskEdit.parseTaskToData(task)
+    );
+  }
+
   getTemplate() {
     return createEditTaskTemplate(this._data);
-  }
-
-  updateData(update, justDataUpdating) {
-    if (!update) {
-      return;
-    }
-
-    this._data = Object.assign(
-        {},
-        this._data,
-        update
-    );
-
-    if (justDataUpdating) {
-      return;
-    }
-
-    this.updateElement();
-  }
-
-  updateElement() {
-    let prevElement = this.getElement();
-    const parent = prevElement.parentElement;
-    this.removeElement();
-
-    const newElement = this.getElement();
-
-    parent.replaceChild(newElement, prevElement);
-    prevElement = null; // Чтобы окончательно "убить" ссылку на prevElement
-    this.restoreHandlers();
   }
 
   restoreHandlers() {
