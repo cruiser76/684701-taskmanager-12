@@ -3,6 +3,7 @@ import Abstract from './abstract.js';
 
 const createTaskTemplate = (task) => {
   const {color, description, dueDate, repeatingDays, isArchive, isFavorite} = task;
+
   const date = formatTaskDueDate(dueDate);
 
   const deadlineClassName = isTaskExpired(dueDate)
