@@ -24,4 +24,4 @@ const BoardPresenter = new BoardManager(main, tasksModel);
 render(mainControl, new SiteMenu(), RenderPosition.BEFOREEND);
 render(main, new Filter(filters), RenderPosition.BEFOREEND);
 
-BoardPresenter.init(tasks);
+BoardPresenter.init();

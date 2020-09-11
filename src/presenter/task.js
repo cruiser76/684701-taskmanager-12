@@ -2,7 +2,7 @@ import TaskView from './../view/task.js';
 import TaskEditView from './../view/task-edit.js';
 
 import {render, replace, remove} from './../utils/render.js';
-import {RenderPosition} from './../utils/const.js';
+import {RenderPosition, UserAction, UpdateType} from './../utils/const.js';
 
 const Mode = {
   DEFAULT: `DEFAULT`,
@@ -97,6 +97,8 @@ class Task {
 
   _handleFavoriteClick() {
     this._changeData(
+        UserAction.UPDATE_TASK,
+        UpdateType.MINOR,
         Object.assign(
             {},
             this._task,
@@ -120,7 +122,11 @@ class Task {
   }
 
   _handleFormSubmit(task) {
-    this._changeData(task);
+    this._changeData(
+        UserAction.UPDATE_TASK,
+        UpdateType.MINOR,
+        task
+    );
     this._replaceFormToCard();
   }
 }
