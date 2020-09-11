@@ -12,7 +12,8 @@ import {updateItem} from "../utils/common.js";
 const TASK_COUNT_PER_STEP = 8;
 
 class Board {
-  constructor(boardContainer) {
+  constructor(boardContainer, tasksModel) {
+    this._tasksModel = tasksModel;
     this._boardContainer = boardContainer;
     this._renderedTaskCount = TASK_COUNT_PER_STEP;
     this._currentSortType = SortType.DEFAULT;
@@ -37,6 +38,10 @@ class Board {
     render(this._boardComponent, this._taskList, RenderPosition.BEFOREEND);
 
     this._renderBoard();
+  }
+
+  _getTasks() {
+    return this._tasksModel.getTasks();
   }
 
   _handleTaskChange(updatedTask) {
