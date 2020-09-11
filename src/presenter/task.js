@@ -2,7 +2,8 @@ import TaskView from './../view/task.js';
 import TaskEditView from './../view/task-edit.js';
 
 import {render, replace, remove} from './../utils/render.js';
-import {RenderPosition} from './../utils/const.js';
+import {RenderPosition, UserAction, UpdateType} from './../utils/const.js';
+import {isTaskRepeating, isDatesEqual} from "../utils/task.js";
 
 const Mode = {
   DEFAULT: `DEFAULT`,
@@ -23,6 +24,7 @@ class Task {
     this._handleFavoriteClick = this._handleFavoriteClick.bind(this);
     this._handleArchiveClick = this._handleArchiveClick.bind(this);
     this._handleFormSubmit = this._handleFormSubmit.bind(this);
+    this._handleDeleteClick = this._handleDeleteClick.bind(this);
     this._escKeyDownHandler = this._escKeyDownHandler.bind(this);
   }
 
@@ -39,6 +41,7 @@ class Task {
     this._taskComponent.setFavoriteClickHandler(this._handleFavoriteClick);
     this._taskComponent.setArchiveClickHandler(this._handleArchiveClick);
     this._taskEditComponent.setFormSubmitHandler(this._handleFormSubmit);
+    this._taskEditComponent.setDeleteClickHandler(this._handleDeleteClick);
 
     if (prevTaskComponent === null || prevTaskEditComponent === null) {
       render(this._taskListContainer, this._taskComponent, RenderPosition.BEFOREEND);
@@ -97,6 +100,8 @@ class Task {
 
   _handleFavoriteClick() {
     this._changeData(
+        UserAction.UPDATE_TASK,
+        UpdateType.MINOR,
         Object.assign(
             {},
             this._task,
@@ -109,6 +114,8 @@ class Task {
 
   _handleArchiveClick() {
     this._changeData(
+        UserAction.UPDATE_TASK,
+        UpdateType.MINOR,
         Object.assign(
             {},
             this._task,
@@ -119,9 +126,27 @@ class Task {
     );
   }
 
-  _handleFormSubmit(task) {
-    this._changeData(task);
+  _handleFormSubmit(update) {
+    // Проверяем, поменялись ли в задаче данные, которые попадают под фильтрацию,
+    // а значит требуют перерисовки списка - если таких нет, это PATCH-обновление
+    const isMinorUpdate =
+      !isDatesEqual(this._task.dueDate, update.dueDate) ||
+      isTaskRepeating(this._task.repeatingDays) !== isTaskRepeating(update.repeatingDays);
+
+    this._changeData(
+        UserAction.UPDATE_TASK,
+        isMinorUpdate ? UpdateType.MINOR : UpdateType.PATCH,
+        update
+    );
     this._replaceFormToCard();
+  }
+
+  _handleDeleteClick(task) {
+    this._changeData(
+        UserAction.DELETE_TASK,
+        UpdateType.MINOR,
+        task
+    );
   }
 }
 

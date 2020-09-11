@@ -1,3 +1,4 @@
+import he from "he";
 import {isTaskExpired, isTaskRepeating, formatTaskDueDate} from '../utils/task.js';
 import Abstract from './abstract.js';
 
@@ -14,11 +15,11 @@ const createTaskTemplate = (task) => {
     ? `card--repeat`
     : ``;
 
-  const archiveClassName = isArchive
+  const archiveClassName = !isArchive
     ? `card__btn--archive card__btn--disabled`
     : `card__btn--archive`;
 
-  const favoriteClassName = isFavorite
+  const favoriteClassName = !isFavorite
     ? `card__btn--favorites card__btn--disabled`
     : `card__btn--favorites`;
 
@@ -48,7 +49,7 @@ const createTaskTemplate = (task) => {
         </div>
 
         <div class="card__textarea-wrap">
-          <p class="card__text">${description}</p>
+          <p class="card__text">${he.encode(description)}</p>
         </div>
 
         <div class="card__settings">

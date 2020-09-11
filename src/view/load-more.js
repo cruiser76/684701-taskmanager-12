@@ -22,7 +22,7 @@ class LoadMore extends Abstract {
 
   setLoadMoreClick(cb) {
     this._callback.loadMoreClick = cb;
-    this._element.addEventListener(`click`, this._handleLoadMoreButtonClick);
+    this.getElement().addEventListener(`click`, this._handleLoadMoreButtonClick);
   }
 }
 
