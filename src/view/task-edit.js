@@ -1,3 +1,4 @@
+import he from "he";
 import flatpickr from 'flatpickr';
 import '../../node_modules/flatpickr/dist/flatpickr.min.css';
 import {COLORS} from '../utils/const.js';
@@ -8,7 +9,7 @@ const BLANK_TASK = {
   color: COLORS[0],
   description: ``,
   dueDate: null,
-  repeating: {
+  repeatingDays: {
     mo: false,
     tu: false,
     we: false,
@@ -108,7 +109,7 @@ const createEditTaskTemplate = (data) => {
               class="card__text"
               placeholder="Start typing your text here..."
               name="text"
-            >${description}.</textarea>
+              >${he.encode(description)}</textarea>
           </label>
         </div>
 

@@ -131,7 +131,7 @@ class Task {
     // а значит требуют перерисовки списка - если таких нет, это PATCH-обновление
     const isMinorUpdate =
       !isDatesEqual(this._task.dueDate, update.dueDate) ||
-      isTaskRepeating(this._task.repeating) !== isTaskRepeating(update.repeating);
+      isTaskRepeating(this._task.repeatingDays) !== isTaskRepeating(update.repeatingDays);
 
     this._changeData(
         UserAction.UPDATE_TASK,
