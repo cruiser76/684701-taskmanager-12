@@ -149,6 +149,7 @@ class TaskEdit extends SmartView {
     this._datepicker = null;
 
     this._handleSubmitForm = this._handleSubmitForm.bind(this);
+    this._formDeleteClickHandler = this._formDeleteClickHandler.bind(this);
     this._descriptionInputHandler = this._descriptionInputHandler.bind(this);
     this._dueDateToggleHandler = this._dueDateToggleHandler.bind(this);
     this._dueDateChangeHandler = this._dueDateChangeHandler.bind(this);
@@ -158,6 +159,15 @@ class TaskEdit extends SmartView {
 
     this._setInnerHandlers();
     this._setDatepicker();
+  }
+
+  removeElement() {
+    super.removeElement();
+
+    if (this._datepicker) {
+      this._datepicker.destroy();
+      this._datepicker = null;
+    }
   }
 
   reset(task) {
@@ -174,6 +184,7 @@ class TaskEdit extends SmartView {
     this._setInnerHandlers();
     this.setFormSubmitHandler(this._callback.handleSubmit);
     this._setDatepicker();
+    this.setDeleteClickHandler(this._callback.deleteClick);
   }
 
   _setDatepicker() {
@@ -285,6 +296,16 @@ class TaskEdit extends SmartView {
   setFormSubmitHandler(cb) {
     this._callback.handleSubmit = cb;
     this.getElement().querySelector(`form`).addEventListener(`submit`, this._handleSubmitForm);
+  }
+
+  _formDeleteClickHandler(evt) {
+    evt.preventDefault();
+    this._callback.deleteClick(TaskEdit.parseDataToTask(this._data));
+  }
+
+  setDeleteClickHandler(callback) {
+    this._callback.deleteClick = callback;
+    this.getElement().querySelector(`.card__delete`).addEventListener(`click`, this._formDeleteClickHandler);
   }
 
   static parseTaskToData(task) {
