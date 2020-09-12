@@ -6,7 +6,7 @@ import LoadMore from './../view/load-more.js';
 import TaskPresenter from './task.js';
 import TaskNewPresenter from "./task-new.js";
 import {render, remove} from './../utils/render.js';
-import {RenderPosition, SortType, UpdateType, UserAction, FilterType} from './../utils/const.js';
+import {RenderPosition, SortType, UpdateType, UserAction} from './../utils/const.js';
 import {filter} from "../utils/filter.js";
 import {sortTaskUp, sortTaskDown} from './../utils/task.js';
 
@@ -34,9 +34,6 @@ class Board {
     this._handleLoadMoreButtonClick = this._handleLoadMoreButtonClick.bind(this);
     this._handleSortTypeChange = this._handleSortTypeChange.bind(this);
 
-    this._tasksModel.addObserver(this._handleModelEvent);
-    this._filterModel.addObserver(this._handleModelEvent);
-
     this._taskNewPresenter = new TaskNewPresenter(this._taskListComponent, this._handleViewAction);
   }
 
@@ -44,13 +41,24 @@ class Board {
     render(this._boardContainer, this._boardComponent, RenderPosition.BEFOREEND);
     render(this._boardComponent, this._taskListComponent, RenderPosition.BEFOREEND);
 
+    this._tasksModel.addObserver(this._handleModelEvent);
+    this._filterModel.addObserver(this._handleModelEvent);
+
     this._renderBoard();
   }
 
-  createTask() {
-    this._currentSortType = SortType.DEFAULT;
-    this._filterModel.setFilter(UpdateType.MAJOR, FilterType.ALL);
-    this._taskNewPresenter.init();
+  destroy() {
+    this._clearBoard({resetRenderedTaskCount: true, resetSortType: true});
+
+    remove(this._taskListComponent);
+    remove(this._boardComponent);
+
+    this._tasksModel.removeObserver(this._handleModelEvent);
+    this._filterModel.removeObserver(this._handleModelEvent);
+  }
+
+  createTask(callback) {
+    this._taskNewPresenter.init(callback);
   }
 
   _getTasks() {
